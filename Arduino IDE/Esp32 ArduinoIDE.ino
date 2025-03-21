@@ -13,8 +13,8 @@
 #include "SPIFFS.h"
 
 // WiFi & MQTT Configuration
-const char* ssid = "BRATIFI";
-const char* password = "THECOLOROFMYUNDERWEAR2020";
+const char* ssid = "";
+const char* password = "";
 
 // NTP Client Setup
 const long utcOffsetInSeconds = 2 * 3600;
@@ -149,7 +149,7 @@ void syncTime() {
     struct timeval tv = { rawTime, 0 };
     settimeofday(&tv, NULL);  // Set ESP32 RTC
 
-    Serial.println("✅ Time synchronized with NTP!");
+    Serial.println(" Time synchronized with NTP!");
     lastNTPUpdate = millis(); // Save last sync time
 }
 
@@ -236,13 +236,13 @@ void saveSensorData() {
     return;
   }
 
-  StaticJsonDocument<512> jsonDoc;            // Make sure this is declared properly
-  jsonDoc["timestamp"] = getFormattedTime();  // Use formatted timestamp;
+  StaticJsonDocument<512> jsonDoc;            
+  jsonDoc["timestamp"] = getFormattedTime();  
 
   //  Fix: Declare `i` inside the loop
   for (int i = 0; i < 12; i++) {
-    float temp = readThermistorTemperature(thermistor_pins[i]);  // ✅ Ensure function exists
-    jsonDoc[String("temp") + String(i + 1)] = temp;              // ✅ Fix concatenation
+    float temp = readThermistorTemperature(thermistor_pins[i]);  
+    jsonDoc[String("temp") + String(i + 1)] = temp;               
     Serial.printf("Thermistor %d: %.2f°C\n", i + 1, temp);
   }
 
@@ -347,17 +347,17 @@ void uploadDataFromSPIFFS() {
 
   // Send bulk data to MySQL
   HTTPClient http;
-  http.begin("http://192.168.1.7/db_sensor_data.php");  // Change to your server URL
+  http.begin("http://192.x.x.x/db_sensor_data.php");  // Change to your server URL
   http.addHeader("Content-Type", "application/json");
 
   int httpResponseCode = http.POST(postData);
   if (httpResponseCode > 0) {
-    Serial.print("✅ MySQL Upload Response: ");
+    Serial.print(" MySQL Upload Response: ");
     Serial.println(httpResponseCode);
     SPIFFS.remove("/ntc_data.txt");  // Delete after successful upload
-    Serial.println("✅ Data uploaded & file deleted.");
+    Serial.println(" Data uploaded & file deleted.");
   } else {
-    Serial.print("❌ HTTP Error: ");
+    Serial.print(" HTTP Error: ");
     Serial.println(httpResponseCode);
   }
 
