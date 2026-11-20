@@ -3,8 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import os
+from pathlib import Path
+
+# Dataset path: defaults to the CSV in the repo root; override with GREENHOUSE_CSV=/path/to/file.csv
+REPO_ROOT = Path(__file__).resolve().parents[1]
+CSV_PATH = Path(os.environ.get("GREENHOUSE_CSV", REPO_ROOT / "sensor_readings3rd.csv"))
+
 # 1. Load dataset
-df = pd.read_csv("D:\jojo8\Documents\greenData\sensor_readings3rd.csv")
+df = pd.read_csv(CSV_PATH)
 
 # 2. Extract time components and create timezone labels
 df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
@@ -121,4 +128,4 @@ plt.legend(title='Timezone')
 plt.grid(True)
 plt.tight_layout()
 plt.show()
-final_pc1_df.to_csv("D:/jojo8/Documents/pc1_projections_by_timezone.csv", index=False)
+final_pc1_df.to_csv(REPO_ROOT / "pc1_projections_by_timezone.csv", index=False)

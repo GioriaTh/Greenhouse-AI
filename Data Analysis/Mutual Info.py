@@ -3,8 +3,15 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import mutual_info_regression
 
+import os
+from pathlib import Path
+
+# Dataset path: defaults to the CSV in the repo root; override with GREENHOUSE_CSV=/path/to/file.csv
+REPO_ROOT = Path(__file__).resolve().parents[1]
+CSV_PATH = Path(os.environ.get("GREENHOUSE_CSV", REPO_ROOT / "sensor_readings3rd.csv"))
+
 # Load dataset
-dataset = pd.read_csv("D:/jojo8/Documents/greenData/sensor_readings3rd.csv")
+dataset = pd.read_csv(CSV_PATH)
 
 # Parse timestamps and filter invalid IR data
 dataset['timestamp'] = pd.to_datetime(dataset['timestamp'], errors='coerce')

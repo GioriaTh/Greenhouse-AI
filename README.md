@@ -59,9 +59,8 @@ python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\act
 pip install -r requirements.txt
 ```
 
-> **Before running:** the scripts currently load the CSV from a hard-coded Windows path
-> (`D:/jojo8/Documents/greenData/...`). Change the `pd.read_csv(...)` / `csv_path` line at the top
-> of each script to `sensor_readings3rd.csv` (or the path on your machine).
+The scripts read `sensor_readings3rd.csv` from the repo root. To use another file, set
+`GREENHOUSE_CSV=/path/to/file.csv`.
 
 ```bash
 python "Data Analysis/Mutual Info.py"

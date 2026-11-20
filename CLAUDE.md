@@ -25,7 +25,7 @@ ESP32 network in the sibling repo `SMART---GREENHOUSE`.
 
 ## Common tasks
 
-- Replace hard-coded `D:/jojo8/...` CSV paths with a relative path or a CLI argument.
+- Load the dataset via `CSV_PATH` (repo-root CSV, overridable with `GREENHOUSE_CSV`) — never hard-code local paths.
 - Move shared loading/filtering code into one module (e.g. `src/data.py`).
 - Add result summaries (MSE per sensor combination) to the README.
 - Keep the README "Dataset" table in sync with the CSV columns.

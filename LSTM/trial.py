@@ -8,8 +8,15 @@ import optuna
 from itertools import combinations
 import gc
 
+import os
+from pathlib import Path
+
+# Dataset path: defaults to the CSV in the repo root; override with GREENHOUSE_CSV=/path/to/file.csv
+REPO_ROOT = Path(__file__).resolve().parents[1]
+CSV_PATH = Path(os.environ.get("GREENHOUSE_CSV", REPO_ROOT / "sensor_readings3rd.csv"))
+
 # --- Configuration ---
-csv_path = "D:/jojo8/Documents/greenData/sensor_readings3rd.csv"
+csv_path = CSV_PATH
 
 ntc_coords = {
     "temp1": (0, 3.0, 2.0), "temp9": (0, 3.0, 1.0), "temp8": (0, 3.0, 0.0),
